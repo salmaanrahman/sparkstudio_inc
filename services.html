@@ -1,0 +1,2560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Services — SparkStudio Tech Solution</title>
+<meta name="description" content="Explore SparkStudio Tech Solution services including UI/UX design, product design, web development, mobile applications, SaaS, dashboards and custom software.">
+<meta name="theme-color" content="#EEEBE4">
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bone:#EEEBE4;
+  --bone-2:#E4E0D7;
+  --paper:#F7F5F0;
+  --ink:#121212;
+  --ink-2:#3A3936;
+  --mute:#77736B;
+  --orange:#FF5A1F;
+  --lilac:#B8A6FF;
+  --lime:#D4FF3A;
+
+  --sans:"General Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",monospace;
+
+  --g:clamp(20px,5vw,76px);
+  --radius:20px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bone);
+}
+
+body{
+  font-family:var(--sans);
+  background:var(--bone);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button{
+  font:inherit;
+  border:0;
+  cursor:pointer;
+}
+
+::selection{
+  background:var(--orange);
+  color:white;
+}
+
+.mono{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+.orange-dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:2px;
+  background:var(--orange);
+  flex:none;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  height:90px;
+  padding:0 var(--g);
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  background:rgba(238,235,228,.86);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  border-bottom:1px solid rgba(18,18,18,.06);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+
+  font-size:25px;
+  font-weight:600;
+  letter-spacing:-1.3px;
+}
+
+.glyph{
+  display:grid;
+  grid-template-columns:repeat(2,10px);
+  gap:3px;
+}
+
+.glyph i{
+  width:10px;
+  height:10px;
+  background:var(--ink);
+  border-radius:3px;
+}
+
+.glyph i:nth-child(2){
+  background:var(--orange);
+}
+
+.brand small{
+  display:block;
+
+  font-family:var(--mono);
+  font-size:8px;
+  font-weight:500;
+  letter-spacing:.15em;
+
+  margin-top:4px;
+  opacity:.6;
+}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.contact-pill{
+  padding:13px 20px;
+
+  border-radius:40px;
+
+  background:var(--ink);
+  color:var(--paper);
+
+  font-size:13px;
+  font-weight:500;
+
+  transition:.3s;
+}
+
+.contact-pill:hover{
+  background:var(--orange);
+  color:white;
+}
+
+.menu-btn{
+  width:44px;
+  height:44px;
+
+  border-radius:50%;
+
+  background:var(--paper);
+
+  display:grid;
+  place-items:center;
+}
+
+.menu-btn span{
+  display:grid;
+  grid-template-columns:repeat(2,6px);
+  gap:4px;
+}
+
+.menu-btn i{
+  width:6px;
+  height:6px;
+  border-radius:2px;
+  background:var(--ink);
+}
+
+
+/* MENU PANEL */
+
+.menu-panel{
+  position:fixed;
+  z-index:99;
+
+  top:79px;
+  right:var(--g);
+
+  width:min(420px,calc(100% - 40px));
+
+  background:var(--paper);
+
+  padding:10px;
+
+  border-radius:20px;
+
+  box-shadow:0 25px 70px rgba(0,0,0,.16);
+
+  opacity:0;
+  visibility:hidden;
+
+  transform:translateY(-10px) scale(.97);
+  transform-origin:top right;
+
+  transition:.4s var(--ease);
+}
+
+.menu-panel.open{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+
+.menu-links{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.menu-links a{
+  min-height:105px;
+
+  background:var(--bone);
+
+  padding:15px;
+
+  border-radius:12px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+
+  transition:.3s;
+}
+
+.menu-links a:hover,
+.menu-links a.active{
+  background:var(--ink);
+  color:var(--paper);
+}
+
+.menu-links b{
+  font-size:27px;
+  font-weight:500;
+  letter-spacing:-1px;
+}
+
+.menu-contact{
+  margin-top:8px;
+
+  padding:16px;
+
+  border-radius:12px;
+
+  background:var(--orange);
+
+  display:flex;
+  justify-content:space-between;
+
+  font-size:14px;
+  font-weight:500;
+}
+
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+.section-label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  gap:20px;
+
+  padding:20px 0;
+
+  margin:0 var(--g);
+
+  border-top:1px solid rgba(18,18,18,.2);
+
+  color:var(--mute);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+  padding:190px var(--g) 100px;
+
+  min-height:720px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.eyebrow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  color:var(--mute);
+}
+
+.hero-main{
+  margin-top:55px;
+}
+
+.hero h1{
+  font-size:clamp(75px,13vw,180px);
+
+  font-weight:400;
+
+  letter-spacing:-.09em;
+  line-height:.82;
+
+  max-width:1250px;
+}
+
+.hero h1 em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.hero-bottom{
+  margin-top:70px;
+
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:30px;
+
+  align-items:end;
+}
+
+.hero-intro{
+  max-width:570px;
+
+  font-size:clamp(17px,1.55vw,21px);
+
+  line-height:1.55;
+
+  letter-spacing:-.02em;
+
+  color:var(--ink-2);
+}
+
+.hero-side{
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-end;
+
+  gap:15px;
+
+  color:var(--mute);
+}
+
+
+/* =========================================================
+   SERVICE INTRO
+========================================================= */
+
+.intro-section{
+  padding:125px var(--g) 145px;
+}
+
+.intro-grid{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:70px;
+
+  align-items:start;
+}
+
+.intro-title{
+  font-size:clamp(44px,6.3vw,90px);
+
+  font-weight:400;
+
+  line-height:.96;
+
+  letter-spacing:-.07em;
+
+  max-width:700px;
+}
+
+.intro-title em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.intro-copy{
+  max-width:570px;
+}
+
+.intro-copy p{
+  font-size:17px;
+
+  line-height:1.75;
+
+  color:var(--ink-2);
+
+  margin-bottom:22px;
+}
+
+.intro-copy p:first-child{
+  font-size:21px;
+
+  line-height:1.55;
+
+  color:var(--ink);
+}
+
+
+/* =========================================================
+   SERVICE CARDS
+========================================================= */
+
+.services-section{
+  padding:0 var(--g) 145px;
+}
+
+.services-head{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:flex-end;
+
+  gap:30px;
+
+  margin-bottom:60px;
+}
+
+.services-head h2{
+  font-size:clamp(48px,7vw,100px);
+
+  font-weight:400;
+
+  line-height:.9;
+
+  letter-spacing:-.075em;
+}
+
+.services-head h2 em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.services-head p{
+  max-width:320px;
+
+  color:var(--mute);
+
+  font-size:14px;
+
+  line-height:1.7;
+}
+
+.services-grid{
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:13px;
+}
+
+.service-card{
+  position:relative;
+
+  min-height:430px;
+
+  padding:25px;
+
+  border-radius:var(--radius);
+
+  background:var(--bone-2);
+
+  overflow:hidden;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+
+  transition:
+    transform .5s var(--ease),
+    background .4s;
+}
+
+.service-card:hover{
+  transform:translateY(-8px);
+  background:var(--paper);
+}
+
+.service-card:nth-child(2){
+  background:#E5DED5;
+}
+
+.service-card:nth-child(3){
+  background:#E6E0ED;
+}
+
+.service-card:nth-child(4){
+  background:#E0E7DD;
+}
+
+.service-card:nth-child(5){
+  background:#E7DDD7;
+}
+
+.service-card:nth-child(6){
+  background:#DDDDE7;
+}
+
+.service-top{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:center;
+}
+
+.service-number{
+  color:var(--mute);
+}
+
+.service-icon{
+  width:56px;
+  height:56px;
+
+  border-radius:50%;
+
+  background:var(--ink);
+  color:var(--paper);
+
+  display:grid;
+  place-items:center;
+
+  font-size:22px;
+
+  transition:.4s var(--ease);
+}
+
+.service-card:hover .service-icon{
+  background:var(--orange);
+  transform:rotate(8deg) scale(1.05);
+}
+
+.service-content h3{
+  font-size:clamp(32px,4vw,55px);
+
+  font-weight:400;
+
+  line-height:.95;
+
+  letter-spacing:-.065em;
+
+  max-width:500px;
+
+  margin-bottom:18px;
+}
+
+.service-content p{
+  max-width:500px;
+
+  font-size:14px;
+
+  line-height:1.7;
+
+  color:var(--ink-2);
+}
+
+.service-link{
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  margin-top:25px;
+
+  font-size:13px;
+
+  font-weight:500;
+
+  border-bottom:1px solid var(--ink);
+
+  padding-bottom:6px;
+
+  transition:.3s;
+}
+
+.service-link:hover{
+  color:var(--orange);
+  border-color:var(--orange);
+}
+
+
+/* =========================================================
+   DARK SERVICE LIST
+========================================================= */
+
+.dark-services{
+  background:var(--ink);
+
+  color:var(--paper);
+
+  padding:125px var(--g) 140px;
+}
+
+.dark-head{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:flex-end;
+
+  gap:30px;
+
+  margin-bottom:70px;
+}
+
+.dark-head h2{
+  font-size:clamp(48px,7.5vw,105px);
+
+  font-weight:400;
+
+  line-height:.9;
+
+  letter-spacing:-.075em;
+}
+
+.dark-head h2 em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.dark-head p{
+  max-width:330px;
+
+  color:rgba(247,245,240,.58);
+
+  font-size:14px;
+
+  line-height:1.7;
+}
+
+.dark-list{
+  border-top:1px solid rgba(247,245,240,.22);
+}
+
+.dark-item{
+  display:grid;
+
+  grid-template-columns:75px 1.1fr 1fr 40px;
+
+  align-items:center;
+
+  gap:20px;
+
+  min-height:120px;
+
+  border-bottom:1px solid rgba(247,245,240,.22);
+
+  transition:
+    padding .45s var(--ease),
+    color .3s;
+}
+
+.dark-item:hover{
+  padding-left:15px;
+  color:var(--orange);
+}
+
+.dark-item .num{
+  color:rgba(247,245,240,.4);
+}
+
+.dark-item h3{
+  font-size:clamp(22px,3vw,38px);
+
+  font-weight:400;
+
+  letter-spacing:-.055em;
+}
+
+.dark-item p{
+  max-width:390px;
+
+  color:rgba(247,245,240,.52);
+
+  font-size:13px;
+
+  line-height:1.6;
+}
+
+.dark-item .arrow{
+  font-size:22px;
+
+  text-align:right;
+
+  color:var(--orange);
+}
+
+
+/* =========================================================
+   ENGAGEMENT
+========================================================= */
+
+.engagement{
+  padding:135px var(--g) 145px;
+}
+
+.engagement-head{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:flex-end;
+
+  gap:30px;
+
+  margin-bottom:70px;
+}
+
+.engagement-head h2{
+  font-size:clamp(47px,7vw,96px);
+
+  font-weight:400;
+
+  line-height:.91;
+
+  letter-spacing:-.07em;
+}
+
+.engagement-head h2 em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.engagement-head p{
+  max-width:310px;
+
+  color:var(--mute);
+
+  font-size:14px;
+
+  line-height:1.7;
+}
+
+.engagement-grid{
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:13px;
+}
+
+.engagement-card{
+  min-height:300px;
+
+  padding:24px;
+
+  border-top:1px solid rgba(18,18,18,.28);
+
+  background:var(--paper);
+
+  transition:.4s var(--ease);
+}
+
+.engagement-card:hover{
+  transform:translateY(-7px);
+}
+
+.engagement-card .step{
+  color:var(--orange);
+
+  margin-bottom:70px;
+}
+
+.engagement-card h3{
+  font-size:clamp(28px,3.5vw,43px);
+
+  font-weight:400;
+
+  letter-spacing:-.06em;
+
+  margin-bottom:15px;
+}
+
+.engagement-card p{
+  max-width:350px;
+
+  font-size:14px;
+
+  line-height:1.7;
+
+  color:var(--ink-2);
+}
+
+
+/* =========================================================
+   SERVICE DETAIL
+========================================================= */
+
+.detail-section{
+  background:var(--paper);
+
+  padding:120px var(--g) 130px;
+}
+
+.detail-top{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  padding-bottom:20px;
+
+  border-bottom:1px solid rgba(18,18,18,.15);
+
+  color:var(--mute);
+}
+
+.detail-grid{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:70px;
+
+  padding-top:75px;
+}
+
+.detail-heading{
+  font-size:clamp(45px,6.5vw,88px);
+
+  font-weight:400;
+
+  line-height:.94;
+
+  letter-spacing:-.07em;
+
+  max-width:620px;
+}
+
+.detail-heading em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.detail-content{
+  max-width:580px;
+}
+
+.detail-content p{
+  font-size:17px;
+
+  line-height:1.75;
+
+  color:var(--ink-2);
+
+  margin-bottom:22px;
+}
+
+.detail-list{
+  margin-top:35px;
+
+  border-top:1px solid rgba(18,18,18,.15);
+}
+
+.detail-list div{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  padding:16px 0;
+
+  border-bottom:1px solid rgba(18,18,18,.12);
+
+  font-size:14px;
+}
+
+.detail-list span:last-child{
+  color:var(--mute);
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta-section{
+  margin:0 var(--g) 100px;
+
+  padding:75px;
+
+  border-radius:var(--radius);
+
+  background:var(--orange);
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.cta-section::after{
+  content:"";
+
+  position:absolute;
+
+  right:-100px;
+  top:-180px;
+
+  width:400px;
+  height:400px;
+
+  border:1px solid rgba(18,18,18,.22);
+
+  border-radius:50%;
+
+  box-shadow:
+    0 0 0 35px rgba(18,18,18,.035),
+    0 0 0 70px rgba(18,18,18,.025);
+}
+
+.cta-section .mono{
+  position:relative;
+  z-index:1;
+}
+
+.cta-content{
+  position:relative;
+  z-index:1;
+
+  display:flex;
+
+  justify-content:space-between;
+  align-items:flex-end;
+
+  gap:30px;
+
+  margin-top:55px;
+}
+
+.cta-content h2{
+  font-size:clamp(45px,8vw,105px);
+
+  line-height:.91;
+
+  letter-spacing:-.075em;
+
+  font-weight:500;
+}
+
+.cta-button{
+  flex:none;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:25px;
+
+  background:var(--ink);
+
+  color:var(--paper);
+
+  padding:17px 23px;
+
+  border-radius:40px;
+
+  font-size:14px;
+
+  font-weight:500;
+
+  transition:.3s;
+}
+
+.cta-button:hover{
+  background:var(--paper);
+
+  color:var(--ink);
+
+  transform:translateY(-4px);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+  background:var(--bone-2);
+
+  padding:65px var(--g) 25px;
+}
+
+.footer-main{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:30px;
+
+  padding-bottom:55px;
+}
+
+.footer-brand{
+  font-size:clamp(33px,5vw,60px);
+
+  font-weight:500;
+
+  letter-spacing:-.065em;
+}
+
+.footer-brand em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.footer-main p{
+  max-width:340px;
+
+  font-size:14px;
+
+  line-height:1.7;
+
+  color:var(--ink-2);
+}
+
+.footer-links{
+  display:grid;
+
+  grid-template-columns:repeat(2,minmax(100px,1fr));
+
+  gap:12px 40px;
+}
+
+.footer-links a{
+  font-size:14px;
+
+  transition:color .3s;
+}
+
+.footer-links a:hover{
+  color:var(--orange);
+}
+
+.footer-bottom{
+  padding-top:20px;
+
+  border-top:1px solid rgba(18,18,18,.2);
+
+  display:flex;
+
+  justify-content:space-between;
+
+  flex-wrap:wrap;
+
+  gap:15px;
+
+  color:var(--mute);
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+
+  transform:translateY(30px);
+
+  transition:
+    opacity .85s var(--ease),
+    transform .85s var(--ease);
+}
+
+.reveal.visible{
+  opacity:1;
+
+  transform:none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+  .hero{
+    min-height:auto;
+  }
+
+  .intro-grid,
+  .detail-grid{
+    grid-template-columns:1fr;
+
+    gap:40px;
+  }
+
+  .services-grid{
+    grid-template-columns:1fr;
+  }
+
+  .service-card{
+    min-height:370px;
+  }
+
+  .engagement-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .engagement-card:last-child{
+    grid-column:1/-1;
+  }
+
+  .dark-item{
+    grid-template-columns:50px 1fr 35px;
+  }
+
+  .dark-item p{
+    display:none;
+  }
+
+  .cta-section{
+    padding:55px 35px;
+  }
+
+}
+
+
+@media(max-width:650px){
+
+  :root{
+    --g:20px;
+    --radius:14px;
+  }
+
+  .navbar{
+    height:75px;
+  }
+
+  .brand{
+    font-size:21px;
+  }
+
+  .contact-pill{
+    display:none;
+  }
+
+  .menu-panel{
+    top:67px;
+  }
+
+  .hero{
+    padding-top:150px;
+
+    padding-bottom:65px;
+  }
+
+  .hero h1{
+    font-size:clamp(62px,13vw,90px);
+  }
+
+  .hero-bottom{
+    grid-template-columns:1fr;
+
+    gap:25px;
+
+    margin-top:45px;
+  }
+
+  .hero-side{
+    justify-content:flex-start;
+  }
+
+  .intro-section,
+  .engagement{
+    padding-top:85px;
+
+    padding-bottom:90px;
+  }
+
+  .services-section{
+    padding-bottom:90px;
+  }
+
+  .services-head,
+  .dark-head,
+  .engagement-head{
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    margin-bottom:45px;
+  }
+
+  .service-card{
+    min-height:330px;
+  }
+
+  .service-content h3{
+    font-size:38px;
+  }
+
+  .dark-services{
+    padding-top:85px;
+
+    padding-bottom:90px;
+  }
+
+  .dark-item{
+    min-height:88px;
+
+    gap:12px;
+
+    grid-template-columns:35px 1fr 25px;
+  }
+
+  .dark-item h3{
+    font-size:22px;
+  }
+
+  .engagement-grid{
+    grid-template-columns:1fr;
+  }
+
+  .engagement-card:last-child{
+    grid-column:auto;
+  }
+
+  .engagement-card{
+    min-height:245px;
+  }
+
+  .engagement-card .step{
+    margin-bottom:40px;
+  }
+
+  .detail-section{
+    padding-top:85px;
+
+    padding-bottom:90px;
+  }
+
+  .detail-grid{
+    padding-top:45px;
+  }
+
+  .detail-heading{
+    font-size:52px;
+  }
+
+  .cta-section{
+    margin-bottom:65px;
+
+    padding:38px 24px;
+  }
+
+  .cta-content{
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    margin-top:38px;
+  }
+
+  .cta-content h2{
+    font-size:clamp(48px,12vw,72px);
+  }
+
+  .footer-main{
+    flex-direction:column;
+
+    padding-bottom:40px;
+  }
+
+  .footer-links{
+    gap:15px 25px;
+  }
+
+}
+
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto!important;
+
+    transition-duration:.01ms!important;
+
+    animation-duration:.01ms!important;
+  }
+
+  .reveal{
+    opacity:1;
+
+    transform:none;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<header class="navbar">
+
+  <a href="index.html" class="brand">
+
+    <span class="glyph">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+
+    <span>
+      SparkStudio
+      <small>TECH SOLUTION</small>
+    </span>
+
+  </a>
+
+
+  <div class="nav-right">
+
+    <a href="index.html#contact" class="contact-pill">
+      Start a project ↗
+    </a>
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      aria-label="Open navigation"
+      aria-expanded="false"
+    >
+
+      <span>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+
+    </button>
+
+  </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MENU
+========================================================= -->
+
+<nav class="menu-panel" id="menuPanel">
+
+  <div class="menu-links">
+
+    <a href="index.html">
+      <span class="mono">01 / Home</span>
+      <b>Home</b>
+    </a>
+
+    <a href="about.html">
+      <span class="mono">02 / Studio</span>
+      <b>About</b>
+    </a>
+
+    <a href="services.html" class="active">
+      <span class="mono">03 / Services</span>
+      <b>Services</b>
+    </a>
+
+    <a href="case-studies.html">
+      <span class="mono">04 / Work</span>
+      <b>Projects</b>
+    </a>
+
+    <a href="process.html">
+      <span class="mono">05 / Method</span>
+      <b>Process</b>
+    </a>
+
+    <a href="technologies.html">
+      <span class="mono">06 / Stack</span>
+      <b>Tech</b>
+    </a>
+
+  </div>
+
+
+  <a href="index.html#contact" class="menu-contact">
+
+    Let's talk about your idea
+
+    <span>↗</span>
+
+  </a>
+
+</nav>
+
+
+
+<main>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+  <div class="eyebrow mono reveal">
+
+    <span class="orange-dot"></span>
+
+    SERVICES / WHAT WE DO
+
+  </div>
+
+
+  <div class="hero-main reveal">
+
+    <h1>
+      Ideas into<br>
+      digital <em>experiences.</em>
+    </h1>
+
+  </div>
+
+
+  <div class="hero-bottom reveal">
+
+    <p class="hero-intro">
+
+      From early product thinking to polished interfaces
+      and working digital experiences, we combine design
+      and technology to help turn ideas into useful products.
+
+    </p>
+
+
+    <div class="hero-side mono">
+
+      <span>Think</span>
+
+      <span>·</span>
+
+      <span>Design</span>
+
+      <span>·</span>
+
+      <span>Develop</span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SECTION LABEL
+========================================================= -->
+
+<div class="section-label mono">
+
+  <span>01 / Our services</span>
+
+  <span>Design + Technology</span>
+
+</div>
+
+
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+
+<section class="intro-section">
+
+  <div class="intro-grid">
+
+    <h2 class="intro-title reveal">
+
+      We design for
+      <em>people,</em>
+      not just screens.
+
+    </h2>
+
+
+    <div class="intro-copy reveal">
+
+      <p>
+
+        Every digital product has a problem to solve,
+        a person to serve and a reason to exist.
+
+      </p>
+
+
+      <p>
+
+        Our services are built around that idea.
+        We combine user experience, visual design
+        and development to create digital products
+        that are clear, useful and purposeful.
+
+      </p>
+
+
+      <p>
+
+        Whether you are starting with an idea,
+        improving an existing product or building
+        something from scratch, we can help shape
+        the experience and bring it closer to reality.
+
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MAIN SERVICES
+========================================================= -->
+
+<section class="services-section">
+
+  <div class="services-head">
+
+    <h2 class="reveal">
+
+      What we<br>
+      <em>do.</em>
+
+    </h2>
+
+
+    <p class="reveal">
+
+      A focused set of services covering
+      product design, digital experiences
+      and software development.
+
+    </p>
+
+  </div>
+
+
+  <div class="services-grid">
+
+
+    <!-- 01 -->
+
+    <article class="service-card reveal">
+
+      <div class="service-top">
+
+        <span class="service-number mono">
+          01 / DESIGN
+        </span>
+
+        <span class="service-icon">
+          ◇
+        </span>
+
+      </div>
+
+
+      <div class="service-content">
+
+        <h3>
+          UI/UX &<br>
+          Product Design
+        </h3>
+
+        <p>
+
+          User flows, wireframes, information architecture,
+          high-fidelity interfaces and prototypes designed
+          around real user needs.
+
+        </p>
+
+        <a href="index.html#contact" class="service-link">
+
+          Discuss a design project
+
+          <span>↗</span>
+
+        </a>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- 02 -->
+
+    <article class="service-card reveal">
+
+      <div class="service-top">
+
+        <span class="service-number mono">
+          02 / WEB
+        </span>
+
+        <span class="service-icon">
+          ↗
+        </span>
+
+      </div>
+
+
+      <div class="service-content">
+
+        <h3>
+          Web Design<br>
+          & Development
+        </h3>
+
+        <p>
+
+          Responsive websites and interactive web experiences
+          with thoughtful layouts, clear content structure
+          and polished interactions.
+
+        </p>
+
+        <a href="index.html#contact" class="service-link">
+
+          Build a website
+
+          <span>↗</span>
+
+        </a>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- 03 -->
+
+    <article class="service-card reveal">
+
+      <div class="service-top">
+
+        <span class="service-number mono">
+          03 / MOBILE
+        </span>
+
+        <span class="service-icon">
+          □
+        </span>
+
+      </div>
+
+
+      <div class="service-content">
+
+        <h3>
+          Mobile App<br>
+          Design & Development
+        </h3>
+
+        <p>
+
+          Mobile experiences for iOS and Android,
+          from product structure and interface design
+          to development-ready experiences.
+
+        </p>
+
+        <a href="index.html#contact" class="service-link">
+
+          Start an app project
+
+          <span>↗</span>
+
+        </a>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- 04 -->
+
+    <article class="service-card reveal">
+
+      <div class="service-top">
+
+        <span class="service-number mono">
+          04 / SAAS
+        </span>
+
+        <span class="service-icon">
+          ⊞
+        </span>
+
+      </div>
+
+
+      <div class="service-content">
+
+        <h3>
+          SaaS &<br>
+          Dashboard Design
+        </h3>
+
+        <p>
+
+          Data-heavy dashboards, admin panels, SaaS products
+          and multi-role interfaces designed with clarity,
+          hierarchy and scalability in mind.
+
+        </p>
+
+        <a href="index.html#contact" class="service-link">
+
+          Design a SaaS product
+
+          <span>↗</span>
+
+        </a>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- 05 -->
+
+    <article class="service-card reveal">
+
+      <div class="service-top">
+
+        <span class="service-number mono">
+          05 / SYSTEMS
+        </span>
+
+        <span class="service-icon">
+          ✳
+        </span>
+
+      </div>
+
+
+      <div class="service-content">
+
+        <h3>
+          Design Systems<br>
+          & Prototyping
+        </h3>
+
+        <p>
+
+          Reusable components, design tokens, visual systems,
+          interactive prototypes and organized Figma files
+          ready for development.
+
+        </p>
+
+        <a href="index.html#contact" class="service-link">
+
+          Build a design system
+
+          <span>↗</span>
+
+        </a>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- 06 -->
+
+    <article class="service-card reveal">
+
+      <div class="service-top">
+
+        <span class="service-number mono">
+          06 / SOFTWARE
+        </span>
+
+        <span class="service-icon">
+          +
+        </span>
+
+      </div>
+
+
+      <div class="service-content">
+
+        <h3>
+          Custom Software<br>
+          & Digital Products
+        </h3>
+
+        <p>
+
+          Purpose-built digital platforms, internal tools
+          and software experiences shaped around specific
+          business requirements.
+
+        </p>
+
+        <a href="index.html#contact" class="service-link">
+
+          Discuss your product
+
+          <span>↗</span>
+
+        </a>
+
+      </div>
+
+    </article>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     DARK SERVICES
+========================================================= -->
+
+<section class="dark-services">
+
+
+  <div class="dark-head">
+
+    <h2 class="reveal">
+
+      More than<br>
+      <em>beautiful.</em>
+
+    </h2>
+
+
+    <p class="reveal">
+
+      Good digital work needs structure,
+      usability and technology behind the visuals.
+      Our approach connects all three.
+
+    </p>
+
+  </div>
+
+
+  <div class="dark-list">
+
+
+    <a href="services.html" class="dark-item reveal">
+
+      <span class="num mono">
+        01
+      </span>
+
+      <h3>
+        UX Research & Strategy
+      </h3>
+
+      <p>
+
+        Understanding users, competitors,
+        business goals and product opportunities.
+
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="services.html" class="dark-item reveal">
+
+      <span class="num mono">
+        02
+      </span>
+
+      <h3>
+        User Flows & Information Architecture
+      </h3>
+
+      <p>
+
+        Organizing content and interactions
+        into clear and understandable journeys.
+
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="services.html" class="dark-item reveal">
+
+      <span class="num mono">
+        03
+      </span>
+
+      <h3>
+        Wireframes & Prototypes
+      </h3>
+
+      <p>
+
+        Exploring ideas quickly before investing
+        in high-fidelity visual design.
+
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="services.html" class="dark-item reveal">
+
+      <span class="num mono">
+        04
+      </span>
+
+      <h3>
+        High-Fidelity UI Design
+      </h3>
+
+      <p>
+
+        Detailed interfaces with visual hierarchy,
+        responsive layouts and consistent systems.
+
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="services.html" class="dark-item reveal">
+
+      <span class="num mono">
+        05
+      </span>
+
+      <h3>
+        Design-to-Development Handoff
+      </h3>
+
+      <p>
+
+        Organized Figma files, components and
+        specifications that make implementation easier.
+
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="services.html" class="dark-item reveal">
+
+      <span class="num mono">
+        06
+      </span>
+
+      <h3>
+        Frontend & Product Development
+      </h3>
+
+      <p>
+
+        Turning approved designs into responsive,
+        functional digital experiences.
+
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     ENGAGEMENT
+========================================================= -->
+
+<div class="section-label mono">
+
+  <span>02 / How we can help</span>
+
+  <span>Flexible collaboration</span>
+
+</div>
+
+
+<section class="engagement">
+
+  <div class="engagement-head">
+
+    <h2 class="reveal">
+
+      Start where<br>
+      you <em>are.</em>
+
+    </h2>
+
+
+    <p class="reveal">
+
+      Not every project starts at the same point.
+      We can join during early exploration,
+      design or development.
+
+    </p>
+
+  </div>
+
+
+  <div class="engagement-grid">
+
+
+    <article class="engagement-card reveal">
+
+      <div class="step mono">
+        OPTION 01 / IDEA
+      </div>
+
+      <h3>
+        From an idea.
+      </h3>
+
+      <p>
+
+        You have a concept but need help turning
+        it into a clear product direction,
+        user experience and visual language.
+
+      </p>
+
+    </article>
+
+
+    <article class="engagement-card reveal">
+
+      <div class="step mono">
+        OPTION 02 / DESIGN
+      </div>
+
+      <h3>
+        From a design.
+      </h3>
+
+      <p>
+
+        You already know what you want to build
+        and need polished UI/UX, prototypes,
+        responsive screens or a design system.
+
+      </p>
+
+    </article>
+
+
+    <article class="engagement-card reveal">
+
+      <div class="step mono">
+        OPTION 03 / PRODUCT
+      </div>
+
+      <h3>
+        From an existing product.
+      </h3>
+
+      <p>
+
+        Your product already exists and needs
+        UX improvements, redesign, new features
+        or a stronger visual system.
+
+      </p>
+
+    </article>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     OUR APPROACH TO QUALITY
+========================================================= -->
+
+<section class="detail-section">
+
+  <div class="detail-top mono">
+
+    <span>03 / Our commitment</span>
+
+    <span>Thoughtful work, clear process</span>
+
+  </div>
+
+
+  <div class="detail-grid">
+
+
+    <h2 class="detail-heading reveal">
+
+      Every project deserves
+      <em>attention.</em>
+
+    </h2>
+
+
+    <div class="detail-content reveal">
+
+      <p>
+
+        We are a growing studio, so our focus is not on
+        producing work at scale just for the sake of scale.
+        We want to understand the project and make each
+        decision count.
+
+      </p>
+
+
+      <p>
+
+        From the first conversation to final handoff,
+        we aim to keep communication clear, feedback
+        organized and the work moving in a meaningful
+        direction.
+
+      </p>
+
+
+      <div class="detail-list">
+
+        <div>
+          <span>01 / Communication</span>
+          <span>Clear & direct</span>
+        </div>
+
+        <div>
+          <span>02 / Design</span>
+          <span>User-focused</span>
+        </div>
+
+        <div>
+          <span>03 / Execution</span>
+          <span>Detail-oriented</span>
+        </div>
+
+        <div>
+          <span>04 / Handoff</span>
+          <span>Development-ready</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="cta-section reveal">
+
+  <div class="mono">
+
+    <span class="orange-dot"></span>
+
+    HAVE A PROJECT IN MIND?
+
+  </div>
+
+
+  <div class="cta-content">
+
+    <h2>
+
+      Let's build<br>
+      something useful.
+
+    </h2>
+
+
+    <a href="index.html#contact" class="cta-button">
+
+      Start a conversation
+
+      <span>↗</span>
+
+    </a>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+  <div class="footer-main">
+
+
+    <div>
+
+      <div class="footer-brand">
+
+        SparkStudio<em>.</em>
+
+      </div>
+
+
+      <p>
+
+        A growing digital studio focused on thoughtful
+        design and purposeful development.
+
+        Think. Design. Develop.
+
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <a href="index.html">
+        Home ↗
+      </a>
+
+      <a href="about.html">
+        About us
+      </a>
+
+      <a href="services.html">
+        Services
+      </a>
+
+      <a href="case-studies.html">
+        Case studies
+      </a>
+
+      <a href="process.html">
+        Our process
+      </a>
+
+      <a href="technologies.html">
+        Technologies
+      </a>
+
+      <a href="index.html#contact">
+        Contact
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom mono">
+
+    <span>
+      © <span id="year"></span> SparkStudio Tech Solution
+    </span>
+
+    <span>
+      Think. Design. Develop.
+    </span>
+
+    <a href="#">
+      Back to top ↑
+    </a>
+
+  </div>
+
+</footer>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+const menuBtn =
+  document.getElementById("menuBtn");
+
+const menuPanel =
+  document.getElementById("menuPanel");
+
+
+menuBtn.addEventListener("click",function(){
+
+  const open =
+    menuPanel.classList.toggle("open");
+
+  menuBtn.setAttribute(
+    "aria-expanded",
+    String(open)
+  );
+
+});
+
+
+document.addEventListener("click",function(event){
+
+  if(
+    !menuPanel.contains(event.target) &&
+    !menuBtn.contains(event.target)
+  ){
+
+    menuPanel.classList.remove("open");
+
+    menuBtn.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+  }
+
+});
+
+
+document.addEventListener("keydown",function(event){
+
+  if(event.key === "Escape"){
+
+    menuPanel.classList.remove("open");
+
+    menuBtn.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+  }
+
+});
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealObserver =
+  new IntersectionObserver(
+
+    function(entries,observer){
+
+      entries.forEach(function(entry){
+
+        if(entry.isIntersecting){
+
+          entry.target.classList.add("visible");
+
+          observer.unobserve(entry.target);
+
+        }
+
+      });
+
+    },
+
+    {
+      threshold:.12,
+      rootMargin:"0px 0px -35px 0px"
+    }
+
+  );
+
+
+document
+  .querySelectorAll(".reveal")
+  .forEach(function(element){
+
+    revealObserver.observe(element);
+
+  });
+
+
+/* =========================================================
+   FOOTER YEAR
+========================================================= */
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+
+/* =========================================================
+   CLOSE MENU AFTER CLICK
+========================================================= */
+
+document
+  .querySelectorAll(".menu-links a,.menu-contact")
+  .forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+      menuPanel.classList.remove("open");
+
+      menuBtn.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+    });
+
+  });
+
+
+/* =========================================================
+   SUBTLE MOUSE MOVEMENT ON SERVICE CARDS
+========================================================= */
+
+document
+  .querySelectorAll(".service-card")
+  .forEach(function(card){
+
+    card.addEventListener("mousemove",function(e){
+
+      if(window.innerWidth < 900) return;
+
+      const rect =
+        card.getBoundingClientRect();
+
+      const x =
+        e.clientX - rect.left;
+
+      const y =
+        e.clientY - rect.top;
+
+      const rotateX =
+        ((y / rect.height) - .5) * -2;
+
+      const rotateY =
+        ((x / rect.width) - .5) * 2;
+
+      card.style.transform =
+        `translateY(-8px)
+         rotateX(${rotateX}deg)
+         rotateY(${rotateY}deg)`;
+
+    });
+
+
+    card.addEventListener("mouseleave",function(){
+
+      card.style.transform = "";
+
+    });
+
+  });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Process — SparkStudio Tech Solution</title>
+<meta name="description" content="Explore the SparkStudio Tech Solution process from discovery and strategy to UI/UX design, development, testing and launch.">
+<meta name="theme-color" content="#EEEBE4">
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bone:#EEEBE4;
+  --bone-2:#E4E0D7;
+  --paper:#F7F5F0;
+  --ink:#121212;
+  --ink-2:#3A3936;
+  --mute:#77736B;
+  --orange:#FF5A1F;
+  --lilac:#B8A6FF;
+  --lime:#D4FF3A;
+  --sans:"General Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",monospace;
+  --g:clamp(20px,5vw,76px);
+  --radius:20px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bone);
+}
+
+body{
+  font-family:var(--sans);
+  background:var(--bone);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button{
+  font:inherit;
+  border:0;
+  cursor:pointer;
+}
+
+::selection{
+  background:var(--orange);
+  color:white;
+}
+
+.mono{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+.orange-dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:2px;
+  background:var(--orange);
+  flex:none;
+}
+
+/* NAVIGATION */
+
+.navbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  height:90px;
+  padding:0 var(--g);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(238,235,228,.86);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(18,18,18,.06);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-size:25px;
+  font-weight:600;
+  letter-spacing:-1.3px;
+}
+
+.glyph{
+  display:grid;
+  grid-template-columns:repeat(2,10px);
+  gap:3px;
+}
+
+.glyph i{
+  width:10px;
+  height:10px;
+  background:var(--ink);
+  border-radius:3px;
+}
+
+.glyph i:nth-child(2){
+  background:var(--orange);
+}
+
+.brand small{
+  display:block;
+  font-family:var(--mono);
+  font-size:8px;
+  font-weight:500;
+  letter-spacing:.15em;
+  margin-top:4px;
+  opacity:.6;
+}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.contact-pill{
+  padding:13px 20px;
+  border-radius:40px;
+  background:var(--ink);
+  color:var(--paper);
+  font-size:13px;
+  font-weight:500;
+  transition:.3s;
+}
+
+.contact-pill:hover{
+  background:var(--orange);
+  color:white;
+}
+
+.menu-btn{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:var(--paper);
+  display:grid;
+  place-items:center;
+}
+
+.menu-btn span{
+  display:grid;
+  grid-template-columns:repeat(2,6px);
+  gap:4px;
+}
+
+.menu-btn i{
+  width:6px;
+  height:6px;
+  border-radius:2px;
+  background:var(--ink);
+}
+
+.menu-panel{
+  position:fixed;
+  z-index:99;
+  top:79px;
+  right:var(--g);
+  width:min(420px,calc(100% - 40px));
+  background:var(--paper);
+  padding:10px;
+  border-radius:20px;
+  box-shadow:0 25px 70px rgba(0,0,0,.16);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-10px) scale(.97);
+  transform-origin:top right;
+  transition:.4s var(--ease);
+}
+
+.menu-panel.open{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+
+.menu-links{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.menu-links a{
+  min-height:105px;
+  background:var(--bone);
+  padding:15px;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:.3s;
+}
+
+.menu-links a:hover,
+.menu-links a.active{
+  background:var(--ink);
+  color:var(--paper);
+}
+
+.menu-links b{
+  font-size:27px;
+  font-weight:500;
+  letter-spacing:-1px;
+}
+
+.menu-contact{
+  margin-top:8px;
+  padding:16px;
+  border-radius:12px;
+  background:var(--orange);
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  font-weight:500;
+}
+
+/* COMMON */
+
+.container{
+  padding-left:var(--g);
+  padding-right:var(--g);
+}
+
+.eyebrow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--mute);
+}
+
+.section-label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  padding:20px 0;
+  margin:0 var(--g);
+  border-top:1px solid rgba(18,18,18,.2);
+  color:var(--mute);
+}
+
+/* HERO */
+
+.hero{
+  padding:190px var(--g) 90px;
+  min-height:690px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.hero-main{
+  margin-top:42px;
+}
+
+.hero h1{
+  font-size:clamp(70px,12vw,170px);
+  font-weight:400;
+  letter-spacing:-.085em;
+  line-height:.84;
+  max-width:1250px;
+}
+
+.hero h1 em{
+  font-style:normal;
+  color:var(--orange);
+}
+
+.hero-bottom{
+  margin-top:65px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  align-items:end;
+}
+
+.hero-intro{
+  max-width:550px;
+  font-size:clamp(17px,1.55vw,21px);
+  line-height:1.55;
+  letter-spacing:-.02em;
+  color:var(--ink-2);
+}
+
+.hero-side{
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-end;
+  gap:16px;
+  color:var(--mute);
+}
+
+/* INTRO SECTION */
+
+.intro-section{
+  padding:120px var(--g) 140px;
+}
+
+.intro-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:start;
+}
+
+.intro-title{
+  font-size:clamp(43px,6.2vw,88px);
+  font-weight:400;
+  line-height:.98;
+  letter-spacing:-.065em;
+  max-width:650px;
+}
+
+.intro-title em{
+  font-style:normal;
+  color:var(--orange);
+}
+
+.intro-copy{
+  padding-top:10px;
+  max-width:570px;
+}
+
+.intro-copy p{
+  font-size:17px;
+  line-height:1.75;
+  color:var(--ink-2);
+  margin-bottom:22px;
+}
+
+.intro-copy p:first-child{
+  font-size:20px;
+  color:var(--ink);
+  line-height:1.55;
+}
+
+.text-link{
+  display:inline-flex;
+  gap:22px;
+  align-items:center;
+  padding-bottom:7px;
+  border-bottom:1px solid var(--ink);
+  margin-top:12px;
+  font-size:14px;
+  font-weight:500;
+  transition:color .3s,border-color .3s;
+}
+
+.text-link:hover{
+  color:var(--orange);
+  border-color:var(--orange);
+}
+
+/* VISUAL STATEMENT */
+
+.visual-section{
+  padding:0 var(--g) 140px;
+}
+
+.visual-frame{
+  position:relative;
+  height:clamp(360px,55vw,670px);
+  overflow:hidden;
+  border-radius:var(--radius);
+  background:#17171B;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  isolation:isolate;
+}
+
+.visual-frame::before{
+  content:"";
+  position:absolute;
+  width:55%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:var(--orange);
+  filter:blur(120px);
+  opacity:.2;
+  left:10%;
+  top:15%;
+}
+
+.visual-frame::after{
+  content:"";
+  position:absolute;
+  width:45%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:var(--lilac);
+  filter:blur(120px);
+  opacity:.18;
+  right:4%;
+  bottom:0;
+}
+
+.visual-grid{
+  position:absolute;
+  inset:0;
+  opacity:.13;
+  background-image:
+    linear-gradient(rgba(255,255,255,.2) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.2) 1px,transparent 1px);
+  background-size:55px 55px;
+}
+
+.visual-center{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  color:var(--paper);
+  padding:20px;
+}
+
+.visual-center .symbol{
+  width:100px;
+  height:100px;
+  margin:0 auto 35px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  transform:rotate(-12deg);
+}
+
+.visual-center .symbol span{
+  display:block;
+  border-radius:14px;
+  background:var(--paper);
+}
+
+.visual-center .symbol span:nth-child(2){
+  background:var(--orange);
+}
+
+.visual-center .symbol span:nth-child(3){
+  opacity:.55;
+}
+
+.visual-center .symbol span:nth-child(4){
+  background:var(--lilac);
+}
+
+.visual-center h2{
+  font-size:clamp(42px,8vw,105px);
+  font-weight:400;
+  letter-spacing:-.07em;
+  line-height:.9;
+}
+
+.visual-center h2 em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.visual-caption{
+  position:absolute;
+  z-index:3;
+  left:25px;
+  right:25px;
+  bottom:22px;
+  color:rgba(247,245,240,.65);
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+/* COMPANY STAGE */
+
+.stage-section{
+  padding:110px var(--g) 140px;
+  background:var(--paper);
+}
+
+.stage-top{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  color:var(--mute);
+  border-bottom:1px solid rgba(18,18,18,.13);
+  padding-bottom:20px;
+}
+
+.stage-grid{
+  padding-top:75px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+}
+
+.stage-heading{
+  font-size:clamp(45px,6vw,82px);
+  font-weight:400;
+  letter-spacing:-.065em;
+  line-height:.95;
+  max-width:600px;
+}
+
+.stage-heading em{
+  font-style:normal;
+  color:var(--orange);
+}
+
+.stage-copy{
+  max-width:560px;
+}
+
+.stage-copy p{
+  font-size:17px;
+  line-height:1.75;
+  color:var(--ink-2);
+  margin-bottom:22px;
+}
+
+.stage-note{
+  margin-top:35px;
+  padding:20px;
+  border-left:3px solid var(--orange);
+  background:var(--bone);
+  font-size:14px;
+  line-height:1.7;
+  color:var(--ink-2);
+}
+
+.stage-note b{
+  display:block;
+  color:var(--ink);
+  font-weight:600;
+  margin-bottom:5px;
+}
+
+/* APPROACH */
+
+.approach-section{
+  padding:135px var(--g);
+}
+
+.approach-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:30px;
+  margin-bottom:70px;
+}
+
+.approach-heading h2{
+  font-size:clamp(47px,7vw,95px);
+  font-weight:400;
+  letter-spacing:-.07em;
+  line-height:.92;
+}
+
+.approach-heading p{
+  max-width:310px;
+  font-size:14px;
+  line-height:1.7;
+  color:var(--mute);
+}
+
+.values-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.value-card{
+  position:relative;
+  min-height:310px;
+  border-radius:var(--radius);
+  padding:25px;
+  background:var(--bone-2);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+  transition:transform .5s var(--ease),background .35s;
+}
+
+.value-card:hover{
+  transform:translateY(-7px);
+  background:var(--paper);
+}
+
+.value-card:nth-child(2){
+  background:#E5DED5;
+}
+
+.value-card:nth-child(3){
+  background:#E6E0ED;
+}
+
+.value-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.value-icon{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--paper);
+  display:grid;
+  place-items:center;
+  font-size:19px;
+}
+
+.value-card h3{
+  font-size:clamp(27px,3vw,39px);
+  font-weight:500;
+  letter-spacing:-.055em;
+  margin-bottom:13px;
+}
+
+.value-card p{
+  max-width:340px;
+  font-size:14px;
+  line-height:1.65;
+  color:var(--ink-2);
+}
+
+/* WHAT WE DO */
+
+.capabilities{
+  background:var(--ink);
+  color:var(--paper);
+  padding:120px var(--g) 130px;
+}
+
+.cap-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:30px;
+  margin-bottom:70px;
+}
+
+.cap-head h2{
+  font-size:clamp(46px,7.2vw,100px);
+  font-weight:400;
+  letter-spacing:-.07em;
+  line-height:.93;
+}
+
+.cap-head p{
+  max-width:330px;
+  color:rgba(247,245,240,.58);
+  font-size:14px;
+  line-height:1.7;
+}
+
+.cap-list{
+  border-top:1px solid rgba(247,245,240,.22);
+}
+
+.cap-item{
+  display:grid;
+  grid-template-columns:70px 1fr 1fr 35px;
+  align-items:center;
+  gap:20px;
+  min-height:105px;
+  border-bottom:1px solid rgba(247,245,240,.22);
+  transition:padding .4s var(--ease),color .3s;
+}
+
+.cap-item:hover{
+  padding-left:13px;
+  color:var(--orange);
+}
+
+.cap-item .num{
+  color:rgba(247,245,240,.4);
+}
+
+.cap-item h3{
+  font-size:clamp(21px,3vw,37px);
+  font-weight:400;
+  letter-spacing:-.05em;
+}
+
+.cap-item p{
+  color:rgba(247,245,240,.5);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.cap-item .arrow{
+  font-size:22px;
+  text-align:right;
+  color:var(--orange);
+}
+
+/* PROCESS */
+
+.process-section{
+  padding:130px var(--g);
+}
+
+.process-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:30px;
+  margin-bottom:70px;
+}
+
+.process-heading h2{
+  font-size:clamp(48px,7vw,95px);
+  font-weight:400;
+  letter-spacing:-.07em;
+  line-height:.92;
+}
+
+.process-heading p{
+  max-width:300px;
+  font-size:14px;
+  line-height:1.7;
+  color:var(--mute);
+}
+
+.process-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.process-card{
+  border-top:1px solid rgba(18,18,18,.3);
+  padding:22px 10px 0 0;
+}
+
+.process-card .step{
+  color:var(--orange);
+  margin-bottom:70px;
+}
+
+.process-card h3{
+  font-size:clamp(28px,4vw,46px);
+  font-weight:400;
+  letter-spacing:-.06em;
+  margin-bottom:15px;
+}
+
+.process-card p{
+  max-width:340px;
+  color:var(--ink-2);
+  font-size:14px;
+  line-height:1.7;
+}
+
+/* CTA */
+
+.cta-section{
+  margin:0 var(--g) 100px;
+  padding:75px;
+  border-radius:var(--radius);
+  background:var(--orange);
+  position:relative;
+  overflow:hidden;
+}
+
+.cta-section::after{
+  content:"";
+  position:absolute;
+  right:-100px;
+  top:-180px;
+  width:400px;
+  height:400px;
+  border:1px solid rgba(18,18,18,.22);
+  border-radius:50%;
+  box-shadow:0 0 0 35px rgba(18,18,18,.035),0 0 0 70px rgba(18,18,18,.025);
+}
+
+.cta-section .mono{
+  position:relative;
+  z-index:1;
+}
+
+.cta-content{
+  position:relative;
+  z-index:1;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:30px;
+  margin-top:55px;
+}
+
+.cta-content h2{
+  font-size:clamp(45px,8vw,105px);
+  line-height:.91;
+  letter-spacing:-.075em;
+  font-weight:500;
+}
+
+.cta-button{
+  flex:none;
+  display:inline-flex;
+  align-items:center;
+  gap:25px;
+  background:var(--ink);
+  color:var(--paper);
+  padding:17px 23px;
+  border-radius:40px;
+  font-size:14px;
+  font-weight:500;
+  transition:.3s;
+}
+
+.cta-button:hover{
+  background:var(--paper);
+  color:var(--ink);
+  transform:translateY(-4px);
+}
+
+/* FOOTER */
+
+.footer{
+  background:var(--bone-2);
+  padding:65px var(--g) 25px;
+}
+
+.footer-main{
+  display:flex;
+  justify-content:space-between;
+  gap:30px;
+  padding-bottom:55px;
+}
+
+.footer-brand{
+  font-size:clamp(33px,5vw,60px);
+  font-weight:500;
+  letter-spacing:-.065em;
+}
+
+.footer-brand em{
+  color:var(--orange);
+  font-style:normal;
+}
+
+.footer-main p{
+  max-width:340px;
+  font-size:14px;
+  line-height:1.7;
+  color:var(--ink-2);
+}
+
+.footer-links{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(100px,1fr));
+  gap:12px 40px;
+}
+
+.footer-links a{
+  font-size:14px;
+  transition:color .3s;
+}
+
+.footer-links a:hover{
+  color:var(--orange);
+}
+
+.footer-bottom{
+  padding-top:20px;
+  border-top:1px solid rgba(18,18,18,.2);
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:15px;
+  color:var(--mute);
+}
+
+/* REVEAL */
+
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .85s var(--ease),transform .85s var(--ease);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+  .hero{
+    min-height:auto;
+  }
+
+  .intro-grid,
+  .stage-grid{
+    grid-template-columns:1fr;
+    gap:35px;
+  }
+
+  .values-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .value-card:last-child{
+    grid-column:1/-1;
+  }
+
+  .cap-item{
+    grid-template-columns:45px 1fr 30px;
+  }
+
+  .cap-item p{
+    display:none;
+  }
+
+  .cta-section{
+    padding:55px 35px;
+  }
+
+}
+
+@media(max-width:650px){
+
+  :root{
+    --g:20px;
+    --radius:14px;
+  }
+
+  .navbar{
+    height:75px;
+  }
+
+  .brand{
+    font-size:21px;
+  }
+
+  .contact-pill{
+    display:none;
+  }
+
+  .menu-panel{
+    top:67px;
+  }
+
+  .hero{
+    padding-top:150px;
+    padding-bottom:65px;
+  }
+
+  .hero h1{
+    font-size:clamp(60px,13vw,88px);
+  }
+
+  .hero-bottom{
+    grid-template-columns:1fr;
+    gap:25px;
+    margin-top:40px;
+  }
+
+  .hero-side{
+    justify-content:flex-start;
+  }
+
+  .intro-section,
+  .stage-section,
+  .approach-section,
+  .process-section{
+    padding-top:80px;
+    padding-bottom:85px;
+  }
+
+  .visual-section{
+    padding-bottom:85px;
+  }
+
+  .visual-frame{
+    height:430px;
+  }
+
+  .visual-center .symbol{
+    width:70px;
+    height:70px;
+  }
+
+  .visual-caption{
+    left:15px;
+    right:15px;
+    bottom:15px;
+    font-size:9px;
+  }
+
+  .stage-grid{
+    padding-top:45px;
+  }
+
+  .approach-heading,
+  .cap-head,
+  .process-heading{
+    flex-direction:column;
+    align-items:flex-start;
+    margin-bottom:45px;
+  }
+
+  .values-grid{
+    grid-template-columns:1fr;
+  }
+
+  .value-card:last-child{
+    grid-column:auto;
+  }
+
+  .value-card{
+    min-height:245px;
+  }
+
+  .capabilities{
+    padding-top:85px;
+    padding-bottom:90px;
+  }
+
+  .cap-item{
+    min-height:83px;
+    gap:12px;
+    grid-template-columns:35px 1fr 25px;
+  }
+
+  .cap-item h3{
+    font-size:22px;
+  }
+
+  .process-grid{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+
+  .process-card .step{
+    margin-bottom:35px;
+  }
+
+  .cta-section{
+    margin-bottom:65px;
+    padding:38px 24px;
+  }
+
+  .cta-content{
+    flex-direction:column;
+    align-items:flex-start;
+    margin-top:38px;
+  }
+
+  .cta-content h2{
+    font-size:clamp(48px,12vw,72px);
+  }
+
+  .footer-main{
+    flex-direction:column;
+    padding-bottom:40px;
+  }
+
+  .footer-links{
+    gap:15px 25px;
+  }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+    animation-duration:.01ms!important;
+  }
+
+  .reveal{
+    opacity:1;
+    transform:none;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<header class="navbar">
+
+  <a href="index.html" class="brand">
+
+    <span class="glyph">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+
+    <span>
+      SparkStudio
+      <small>TECH SOLUTION</small>
+    </span>
+
+  </a>
+
+
+  <div class="nav-right">
+
+    <a href="index.html#contact" class="contact-pill">
+      Start a project ↗
+    </a>
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      aria-label="Open navigation"
+      aria-expanded="false"
+    >
+
+      <span>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- NAVIGATION MENU -->
+
+<nav class="menu-panel" id="menuPanel">
+
+  <div class="menu-links">
+
+    <a href="index.html">
+      <span class="mono">01 / Home</span>
+      <b>Home</b>
+    </a>
+
+    <a href="about.html">
+      <span class="mono">02 / Studio</span>
+      <b>About</b>
+    </a>
+
+    <a href="services.html">
+      <span class="mono">03 / Services</span>
+      <b>Services</b>
+    </a>
+
+    <a href="case-studies.html">
+      <span class="mono">04 / Work</span>
+      <b>Projects</b>
+    </a>
+
+    <a href="process.html" class="active">
+      <span class="mono">05 / Method</span>
+      <b>Process</b>
+    </a>
+
+    <a href="technologies.html">
+      <span class="mono">06 / Stack</span>
+      <b>Tech</b>
+    </a>
+
+  </div>
+
+
+  <a href="index.html#contact" class="menu-contact">
+    Let's talk about your idea
+    <span>↗</span>
+  </a>
+
+</nav>
+
+
+<main>
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+  <div class="eyebrow mono reveal">
+
+    <span class="orange-dot"></span>
+
+    OUR PROCESS / 2026
+
+  </div>
+
+
+  <div class="hero-main reveal">
+
+    <h1>
+
+      From idea<br>
+      to <em>impact.</em>
+
+    </h1>
+
+  </div>
+
+
+  <div class="hero-bottom reveal">
+
+    <p class="hero-intro">
+
+      We follow a clear and collaborative process that
+      connects strategy, design and development —
+      turning ideas into purposeful digital products.
+
+    </p>
+
+
+    <div class="hero-side mono">
+
+      <span>Understand</span>
+      <span>·</span>
+      <span>Design</span>
+      <span>·</span>
+      <span>Develop</span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SECTION 01
+===================================================== -->
+
+<div class="section-label mono">
+
+  <span>01 / Our approach</span>
+
+  <span>Think · Design · Develop</span>
+
+</div>
+
+
+<section class="intro-section">
+
+  <div class="intro-grid">
+
+
+    <h2 class="intro-title reveal">
+
+      Good work starts with
+      <em>understanding.</em>
+
+    </h2>
+
+
+    <div class="intro-copy reveal">
+
+      <p>
+
+        Before we design or develop anything, we first
+        understand what needs to be solved.
+
+      </p>
+
+
+      <p>
+
+        We learn about your business, users, goals,
+        requirements and challenges. This helps us
+        create a clear direction instead of making
+        decisions based only on assumptions.
+
+      </p>
+
+
+      <p>
+
+        Once the direction is clear, we move through
+        research, user flows, wireframes, UI design,
+        prototyping and development in a connected workflow.
+
+      </p>
+
+
+      <p>
+
+        The goal is not simply to finish a project.
+        The goal is to create something useful,
+        understandable and ready for real users.
+
+      </p>
+
+
+      <a href="index.html#contact" class="text-link">
+
+        Start a conversation
+
+        <span>↗</span>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     VISUAL STATEMENT
+===================================================== -->
+
+<section class="visual-section">
+
+  <div class="visual-frame reveal">
+
+    <div class="visual-grid"></div>
+
+
+    <div class="visual-center">
+
+      <div class="symbol">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </div>
+
+
+      <h2>
+
+        Think.<br>
+        Design.<br>
+        <em>Develop.</em>
+
+      </h2>
+
+    </div>
+
+
+    <div class="visual-caption mono">
+
+      <span>
+        SPARKSTUDIO / OUR PROCESS
+      </span>
+
+      <span>
+        IDEA INTO EXPERIENCE
+      </span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SECTION 02
+===================================================== -->
+
+<div class="section-label mono">
+
+  <span>02 / Discovery</span>
+
+  <span>Understand before building</span>
+
+</div>
+
+
+<section class="stage-section">
+
+  <div class="stage-top mono">
+
+    <span>
+      DISCOVERY + STRATEGY
+    </span>
+
+    <span>
+      DEFINE THE RIGHT DIRECTION
+    </span>
+
+  </div>
+
+
+  <div class="stage-grid">
+
+
+    <h2 class="stage-heading reveal">
+
+      First, we understand
+      the <em>problem.</em>
+
+    </h2>
+
+
+    <div class="stage-copy reveal">
+
+      <p>
+
+        Every project starts with questions.
+        What are we building? Who is it for?
+        What problem does it solve? What does
+        success look like?
+
+      </p>
+
+
+      <p>
+
+        We gather requirements, understand the
+        product context and identify the most
+        important user and business needs.
+
+      </p>
+
+
+      <p>
+
+        This stage gives the project a foundation
+        before we move into design and development.
+
+      </p>
+
+
+      <div class="stage-note">
+
+        <b>DISCOVERY INCLUDES</b>
+
+        Requirements · User Needs · Business Goals ·
+        Product Scope · Competitive Understanding
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SECTION 03
+===================================================== -->
+
+<div class="section-label mono">
+
+  <span>03 / Design</span>
+
+  <span>Structure before decoration</span>
+
+</div>
+
+
+<section class="approach-section">
+
+  <div class="approach-heading">
+
+
+    <h2 class="reveal">
+
+      Shape the
+      <span style="color:var(--orange)">experience.</span>
+
+    </h2>
+
+
+    <p class="reveal">
+
+      We move from structure to interaction and
+      finally to the visual interface — making
+      every design decision purposeful.
+
+    </p>
+
+  </div>
+
+
+  <div class="values-grid">
+
+
+    <article class="value-card reveal">
+
+      <div class="value-top">
+
+        <span class="mono">
+          01 / STRUCTURE
+        </span>
+
+        <span class="value-icon">
+          01
+        </span>
+
+      </div>
+
+
+      <div>
+
+        <h3>
+          User flows.
+        </h3>
+
+
+        <p>
+
+          We map how users move through the product,
+          identify important actions and organize
+          the information architecture.
+
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <article class="value-card reveal">
+
+      <div class="value-top">
+
+        <span class="mono">
+          02 / WIREFRAME
+        </span>
+
+        <span class="value-icon">
+          02
+        </span>
+
+      </div>
+
+
+      <div>
+
+        <h3>
+          Build the structure.
+        </h3>
+
+
+        <p>
+
+          Wireframes help us validate layout,
+          hierarchy and content before investing
+          heavily in visual details.
+
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <article class="value-card reveal">
+
+      <div class="value-top">
+
+        <span class="mono">
+          03 / UI DESIGN
+        </span>
+
+        <span class="value-icon">
+          03
+        </span>
+
+      </div>
+
+
+      <div>
+
+        <h3>
+          Bring it to life.
+        </h3>
+
+
+        <p>
+
+          High-fidelity UI, components, typography,
+          color and interaction details create the
+          final visual experience.
+
+        </p>
+
+      </div>
+
+    </article>
+
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SECTION 04
+===================================================== -->
+
+<section class="capabilities">
+
+  <div class="cap-head">
+
+
+    <h2 class="reveal">
+
+      From design<br>
+      to <span>working product.</span>
+
+    </h2>
+
+
+    <p class="reveal">
+
+      Once the experience is approved, we connect
+      the design with the technology required to
+      make the product work in the real world.
+
+    </p>
+
+  </div>
+
+
+  <div class="cap-list">
+
+
+    <a href="technologies.html" class="cap-item reveal">
+
+      <span class="num mono">
+        01
+      </span>
+
+      <h3>
+        Design Handoff
+      </h3>
+
+      <p>
+        Organized Figma files, components,
+        states and developer-ready specifications.
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="technologies.html" class="cap-item reveal">
+
+      <span class="num mono">
+        02
+      </span>
+
+      <h3>
+        Frontend Development
+      </h3>
+
+      <p>
+        React.js, HTML, CSS, JavaScript,
+        Tailwind CSS and Flutter.
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="technologies.html" class="cap-item reveal">
+
+      <span class="num mono">
+        03
+      </span>
+
+      <h3>
+        Backend Development
+      </h3>
+
+      <p>
+        Node.js and Express.js for server-side
+        applications and REST APIs.
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="technologies.html" class="cap-item reveal">
+
+      <span class="num mono">
+        04
+      </span>
+
+      <h3>
+        Database & Services
+      </h3>
+
+      <p>
+        MongoDB and Firebase for data,
+        cloud services and product needs.
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+    <a href="technologies.html" class="cap-item reveal">
+
+      <span class="num mono">
+        05
+      </span>
+
+      <h3>
+        API & Testing
+      </h3>
+
+      <p>
+        REST API workflows and Postman testing
+        before the product reaches users.
+      </p>
+
+      <span class="arrow">
+        ↗
+      </span>
+
+    </a>
+
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SECTION 05
+===================================================== -->
+
+<div class="section-label mono">
+
+  <span>04 / How projects move</span>
+
+  <span>A connected workflow</span>
+
+</div>
+
+
+<section class="process-section">
+
+
+  <div class="process-heading">
+
+
+    <h2 class="reveal">
+
+      Simple steps.<br>
+      <span style="color:var(--orange)">
+        Better work.
+      </span>
+
+    </h2>
+
+
+    <p class="reveal">
+
+      Every project is different, but the core
+      workflow stays focused and transparent.
+
+    </p>
+
+  </div>
+
+
+  <div class="process-grid">
+
+
+    <article class="process-card reveal">
+
+      <div class="step mono">
+        STEP 01 / DISCOVER
+      </div>
+
+
+      <h3>
+        Understand.
+      </h3>
+
+
+      <p>
+
+        We define the problem, understand the users,
+        collect requirements and establish the
+        direction of the project.
+
+      </p>
+
+    </article>
+
+
+    <article class="process-card reveal">
+
+      <div class="step mono">
+        STEP 02 / DESIGN
+      </div>
+
+
+      <h3>
+        Shape.
+      </h3>
+
+
+      <p>
+
+        We create user flows, wireframes,
+        high-fidelity interfaces and prototypes
+        that turn the direction into an experience.
+
+      </p>
+
+    </article>
+
+
+    <article class="process-card reveal">
+
+      <div class="step mono">
+        STEP 03 / DEVELOP
+      </div>
+
+
+      <h3>
+        Build.
+      </h3>
+
+
+      <p>
+
+        We transform approved designs into
+        functional web, mobile and software
+        experiences ready for real users.
+
+      </p>
+
+    </article>
+
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     CTA
+===================================================== -->
+
+<section class="cta-section reveal">
+
+
+  <div class="mono">
+
+    <span class="orange-dot"></span>
+
+    READY TO START?
+
+  </div>
+
+
+  <div class="cta-content">
+
+
+    <h2>
+
+      Have an idea?<br>
+      Let's build it.
+
+    </h2>
+
+
+    <a href="index.html#contact" class="cta-button">
+
+      Start a project
+
+      <span>
+        ↗
+      </span>
+
+    </a>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+
+  <div class="footer-main">
+
+
+    <div>
+
+      <div class="footer-brand">
+
+        SparkStudio<em>.</em>
+
+      </div>
+
+
+      <p>
+
+        A growing digital studio focused on thoughtful
+        design and purposeful development.
+        Think. Design. Develop.
+
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <a href="index.html">
+        Home ↗
+      </a>
+
+      <a href="about.html">
+        About us
+      </a>
+
+      <a href="services.html">
+        Services
+      </a>
+
+      <a href="case-studies.html">
+        Case studies
+      </a>
+
+      <a href="process.html">
+        Our process
+      </a>
+
+      <a href="technologies.html">
+        Technologies
+      </a>
+
+      <a href="index.html#contact">
+        Contact
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom mono">
+
+    <span>
+      © <span id="year"></span> SparkStudio Tech Solution
+    </span>
+
+    <span>
+      Think. Design. Develop.
+    </span>
+
+    <a href="#">
+      Back to top ↑
+    </a>
+
+  </div>
+
+</footer>
+
+
+<script>
+
+/* MOBILE NAVIGATION */
+
+const menuBtn = document.getElementById("menuBtn");
+const menuPanel = document.getElementById("menuPanel");
+
+menuBtn.addEventListener("click", function(){
+
+  const open = menuPanel.classList.toggle("open");
+
+  menuBtn.setAttribute(
+    "aria-expanded",
+    String(open)
+  );
+
+});
+
+
+document.addEventListener("click",function(event){
+
+  if(
+    !menuPanel.contains(event.target) &&
+    !menuBtn.contains(event.target)
+  ){
+
+    menuPanel.classList.remove("open");
+
+    menuBtn.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+  }
+
+});
+
+
+document.addEventListener("keydown",function(event){
+
+  if(event.key === "Escape"){
+
+    menuPanel.classList.remove("open");
+
+    menuBtn.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+  }
+
+});
+
+
+/* SCROLL REVEAL */
+
+const revealObserver =
+  new IntersectionObserver(
+
+    function(entries,observer){
+
+      entries.forEach(function(entry){
+
+        if(entry.isIntersecting){
+
+          entry.target.classList.add("visible");
+
+          observer.unobserve(entry.target);
+
+        }
+
+      });
+
+    },
+
+    {
+      threshold:.12,
+      rootMargin:"0px 0px -35px 0px"
+    }
+
+  );
+
+
+document
+  .querySelectorAll(".reveal")
+  .forEach(function(element){
+
+    revealObserver.observe(element);
+
+  });
+
+
+/* FOOTER YEAR */
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+
+/* CLOSE MENU AFTER NAVIGATION */
+
+document
+  .querySelectorAll(".menu-links a,.menu-contact")
+  .forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+      menuPanel.classList.remove("open");
+
+      menuBtn.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+    });
+
+  });
+
+</script>
+
+</body>
+</html>
